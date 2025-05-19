@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://bitbytelab.github.io/assets/logos/BitByteLab/bitbyte_round_rec_256.png" alt="BitByteLab Logo" height="120">
+  <img src="https://bitbytelab.github.io/assets/logos/bitbytelab.png" alt="BitByteLab Logo" height="120" style="border-radius:12px;">
 </p>
 
 <h1 align="center">BitByteLab - Assets Repository</h1>
@@ -41,6 +41,7 @@ This repository hosts static and media assets used across all BitByteLab platfor
 
 - Company logos and branding assets
 - Icons, banners, and cover images
+- JS and CSS Style Sheets
 - Illustration files and UI components
 - Shared public resources and downloadable content
 
