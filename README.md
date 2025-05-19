@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://bitbytelab.github.io/assets/logos/bitbytelab.png" alt="BitByteLab Logo" height="120" style="border-radius:12px;">
+  <img src="https://bitbytelab.github.io/assets/logos/bitbytelab.png" alt="BitByteLab Logo" height="120">
 </p>
 
 <h1 align="center">BitByteLab - Assets Repository</h1>
