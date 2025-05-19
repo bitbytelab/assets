@@ -1,0 +1,12 @@
+# Ignore temporary files
+*.xcf
+*.sketch
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Ignore design source files (optional)
+source-files/
+
+# Ignore previews or exports not intended for deployment
+previews/

@@ -1,0 +1,9 @@
+9f0600 dark
+c20600 primary
+630b00 txtdark
+ff7f55 txtlight
+
+#ff3b42 tomato
+#ffffac moccasin
+#fde392 khaki
+#fddc77 khaki 1
