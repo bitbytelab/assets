@@ -1,16 +1,17 @@
-<p align="center">
+<div align="center">
+<p>
   <img src="https://bitbytelab.github.io/assets/logos/bitbytelab.png" alt="BitByteLab Logo" height="120">
 </p>
 
-<h1 align="center">BitByteLab - Assets Repository</h1>
+<h1>BitByteLab - Assets Repository</h1>
 
-<p align="center">
+<p>
   🌐 Centralized storage for static assets used across BitByteLab projects. <br>
   📦 Logos, icons, illustrations, images, and shared public resources. <br><br>
   This repository helps us serve and manage design resources consistently and efficiently across our products and services.
 </p>
 
-<p align="center">
+<p>
   <!-- GitHub Badges -->
   <a href="https://github.com/bitbytelab/assets">
     <img alt="Repo size" src="https://img.shields.io/github/repo-size/bitbytelab/assets?color=blue&style=flat-square">
@@ -28,6 +29,7 @@
     <img alt="Last Commit" src="https://img.shields.io/github/last-commit/bitbytelab/assets?style=flat-square">
   </a>
 </p>
+</div>
 
 ---
 
