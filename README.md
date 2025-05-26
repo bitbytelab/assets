@@ -22,6 +22,9 @@
   <a href="https://github.com/bitbytelab/assets/issues">
     <img alt="Issues" src="https://img.shields.io/github/issues/bitbytelab/assets?style=flat-square">
   </a>
+  <a href="https://github.com/bitbytelab/assets/pulls">
+    <img alt="Issues" src="https://img.shields.io/github/issues-pr/bitbytelab/assets?style=flat-square">
+  </a>
   <a href="https://github.com/bitbytelab/assets/blob/main/LICENSE">
     <img alt="License" src="https://img.shields.io/github/license/bitbytelab/assets?style=flat-square">
   </a>
