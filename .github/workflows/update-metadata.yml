@@ -1,0 +1,92 @@
+name: Update Repo Metadata
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get repo size in KB (using git count-objects)
+        id: repo_size
+        run: |
+          size_kb=$(git count-objects -v | grep 'size-pack' | awk '{print $2}')
+          echo "repo_size_kb=$size_kb" >> $GITHUB_OUTPUT
+
+      - name: Get contributor count
+        id: contributors
+        run: |
+          count=$(git shortlog -sn --all | wc -l)
+          echo "contributors=$count" >> $GITHUB_OUTPUT
+
+      - name: Get last commit SHA and date
+        id: last_commit
+        run: |
+          date=$(git log -1 --format=%cd --date=format:'%d_%b_%Y')
+          echo "last_commit_date=$date" >> $GITHUB_OUTPUT
+
+      - name: Get number of open issues
+        id: issues
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+            });
+            // filter out PRs because GitHub API returns PRs in issues list
+            const pureIssues = issues.data.filter(i => !i.pull_request);
+            return pureIssues.length;
+          result-encoding: string
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get number of open pull requests
+        id: prs
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prs = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+            });
+            return prs.data.length;
+          result-encoding: string
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update README metadata section
+        run: |
+          repo_size_mb=$(echo "scale=2; ${{ steps.repo_size.outputs.repo_size_kb }} / 1024" | bc)
+
+          printf '<!-- repo-metadata-start -->\nRepo size: %s MB  \nContributors: %s  \nLast commit: %s  \nOpen issues: %s  \nOpen PRs: %s\n<!-- repo-metadata-end -->\n' \
+          "$repo_size_mb" \
+          "${{ steps.contributors.outputs.contributors }}" \
+          "${{ steps.last_commit.outputs.last_commit_date }}" \
+          "${{ steps.issues.outputs.result }}" \
+          "${{ steps.prs.outputs.result }}" > new_metadata.txt
+          
+          sed -i '/<!-- repo-metadata-start -->/,/<!-- repo-metadata-end -->/{ 
+            r new_metadata.txt 
+            d
+          }' README.md
+
+          rm new_metadata.txt
+
+      - name: Commit and push changes if any
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          if ! git diff --quiet README.md; then
+            git add README.md
+            git commit -m "Update repo metadata"
+            git push
+          else
+            echo "No changes to commit"
+          fi
