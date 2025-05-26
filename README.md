@@ -32,6 +32,17 @@
     <img alt="Last Commit" src="https://img.shields.io/github/last-commit/bitbytelab/assets?style=flat-square">
   </a>
 </p>
+<div>
+<!-- repo-metadata-start -->
+
+<img src="https://img.shields.io/badge/repo_size-12.34_MB-blue?style=flat-square" />
+<img src="https://img.shields.io/badge/contributors-2-red?style=flat-square" />
+<img src="https://img.shields.io/badge/last_commit-26_May_2025-default?style=flat-square" />
+<img src="https://img.shields.io/badge/issues-3-teal?style=flat-square" />
+<img src="https://img.shields.io/badge/pull_requests-1-purple?style=flat-square" />
+
+<!-- repo-metadata-end -->
+</div>
 </div>
 
 ---
