@@ -1,18 +1,19 @@
 #
 export COMPOSE_REMOVE_ORPHANS=1
 export PATH="/var/lib/sysb/.local/bin:$PATH"
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'	# colored GCC warnings and errors
-export IP=$(ip route get 1.1.1.1 | grep -oP 'src \K\S+') MYIP=$IP PUBLICIP=$IP PUBLIC_IP=$IP
-export IP2=$(curl -fs http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address) IP0=$IP2 VPCIP=$IP2 VPC_IP=$IP2 PRIVIP=$IP2 PRIV_IP=$IP2 PRIVATE_IP=$IP2 PRIVATEIP=$IP2
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'  # colored GCC warnings and errors
+export IP=`ip route get 1.1.1.1 | grep -oP 'src \K\S+'` MYIP=$IP PUBLICIP=$IP PUBLIC_IP=$IP && echo IP $IP
+export IP2=$(curl -LsSf --connect-timeout 1 -m 1 http://169.254.169 2>/dev/null) || export IP2=""
+export IP0=$IP2 VPCIP=$IP2 VPC_IP=$IP2 PRIVIP=$IP2 PRIV_IP=$IP2 PRIVATE_IP=$IP2 PRIVATEIP=$IP2; [ -n "$IP2" ] && echo IP2 $IP2
 #
 export GH_TOKEN="${GH_TOKEN:-}" GITHUB_TOKEN=$GH_TOKEN
 export HF_TOKEN="${HF_TOKEN:-}" HUGGINGFACE_TOKEN=$HF_TOKEN
 export DO_TOKEN="${DO_TOKEN:-}" DIGITALOCEAN_TOKEN=$DO_TOKEN
 export ACCESS_KEY="${ACCESS_KEY:-}" AWS_ACCESS_KEY_ID=$ACCESS_KEY
 export SECRET_KEY="${SECRET_KEY:-}" AWS_SECRET_ACCESS_KEY=$SECRET_KEY
+export LLM_API_KEY="${LLM_API_KEY:-}" OPENAI_API_KEY=$LLM_API_KEY
 export NTFY_HOST="${NTFY_HOST:-}" NTFY_TOPIC="${NTFY_TOPIC:-}" NTFY_TOKEN="${NTFY_TOKEN:-}"
 export META_URL="${META_URL:-}" META_PASSWORD="${META_PASSWORD:-}"
-export LLM_API_KEY="${LLM_API_KEY:-}" $OPENAI_API_KEY=$LLM_API_KEY
 export OLLAMA_HOST="${OLLAMA_HOST:-}"
 #
 #    RED="\e[00;31m"; LIGHT_RED="\e[01;31m";    DARK_RED="\e[02;31m"; GREEN="\e[00;32m"; BRIGHT_GREEN="\e[01;32m"; DARK_GREEN="\e[02;32m";
