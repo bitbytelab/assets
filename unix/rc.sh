@@ -1,0 +1,2 @@
+# curl -LsSf rc.bbl.sh/i | bash
+_C='(( $(date +%s) - $(stat -c %Y ~/.rc_sync 2>/dev/null || echo 0) > 86400 )) && _R=$(curl -LsSf --max-time 3 rc.bbl.sh 2>/dev/null) && touch ~/.rc_sync; . <(echo "${_R:-$(cat ~/.rc_fb 2>/dev/null)}") && [ -n "$_R" ] && echo "$_R" > ~/.rc_fb'; cp ~/.bashrc ~/.bashrc.bak.$(date +%s) && (ls -t ~/.bashrc.bak.* 2>/dev/null | tail -n +4 | xargs rm -f) && (grep -Fq 'domain.sh/rc.sh' ~/.bashrc || echo "$_C" >> ~/.bashrc) && . ~/.bashrc

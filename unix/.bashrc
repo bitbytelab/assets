@@ -5,6 +5,16 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export IP=$(ip route get 1.1.1.1 | grep -oP 'src \K\S+') MYIP=$IP PUBLICIP=$IP PUBLIC_IP=$IP
 export IP2=$(curl -fs http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address) IP0=$IP2 VPCIP=$IP2 VPC_IP=$IP2 PRIVIP=$IP2 PRIV_IP=$IP2 PRIVATE_IP=$IP2 PRIVATEIP=$IP2
 #
+export GH_TOKEN="${GH_TOKEN:-}" GITHUB_TOKEN=$GH_TOKEN
+export HF_TOKEN="${HF_TOKEN:-}" HUGGINGFACE_TOKEN=$HF_TOKEN
+export DO_TOKEN="${DO_TOKEN:-}" DIGITALOCEAN_TOKEN=$DO_TOKEN
+export ACCESS_KEY="${ACCESS_KEY:-}" AWS_ACCESS_KEY_ID=$ACCESS_KEY
+export SECRET_KEY="${SECRET_KEY:-}" AWS_SECRET_ACCESS_KEY=$SECRET_KEY
+export NTFY_HOST="${NTFY_HOST:-}" NTFY_TOPIC="${NTFY_TOPIC:-}" NTFY_TOKEN="${NTFY_TOKEN:-}"
+export META_URL="${META_URL:-}" META_PASSWORD="${META_PASSWORD:-}"
+export LLM_API_KEY="${LLM_API_KEY:-}" $OPENAI_API_KEY=$LLM_API_KEY
+export OLLAMA_HOST="${OLLAMA_HOST:-}"
+#
 #    RED="\e[00;31m"; LIGHT_RED="\e[01;31m";    DARK_RED="\e[02;31m"; GREEN="\e[00;32m"; BRIGHT_GREEN="\e[01;32m"; DARK_GREEN="\e[02;32m";
 #  BROWN="\e[00;33m";    YELLOW="\e[01;33m"; DARK_YELLOW="\e[02;33m";  BLUE="\e[00;34m";   LIGHT_BLUE="\e[01;34m";  DARK_BLUE="\e[02;34m";
 # PURPLE="\e[00;35m";   MAGENTA="\e[01;35m"; DARK_PURPLE="\e[02;35m";  CYAN="\e[00;36m";   LIGHT_CYAN="\e[01;36m";  DARK_CYAN="\e[02;36m";
@@ -134,6 +144,4 @@ unalias alert 2>/dev/null
 alert() { local s=$?; echo -e "\a\n[ $([ $s -eq 0 ] && echo -e "\e[32mSUCCESS\e[0m" || echo -e "\e[31mERROR\e[0m") ] Finished: $(history 1 | sed -e 's/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//')"; }
 #
 # TODO: custom motd summary
-#
-# (( $(date +%s) - $(stat -c %Y ~/.rc_sync 2>/dev/null || echo 0) > 86400 )) && _R=$(curl -LsSf --max-time 3 rc.bbl.sh 2>/dev/null) && touch ~/.rc_sync && . <(echo "${_R:-$(cat ~/.rc_fb 2>/dev/null)}") && [ -n "$_R" ] && echo "$_R" > ~/.rc_fb
 #
