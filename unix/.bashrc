@@ -121,7 +121,7 @@ alias own="sudo chown $USER:$USER"
 bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
 bind 'set menu-complete-display-prefix on'
-bind '"\t": menu-complete' 	# Bind Tab key for cycling instead of printing static list
+bind '"\t": menu-complete'	# Bind Tab key for cycling instead of printing static list
 #
 complete -f -X '!*.pdf' zathura okular evince
 complete -f -X '!*.@(mp4|mkv|avi|mp3|flac)' vlc mpv
@@ -136,7 +136,7 @@ command -v docker >/dev/null && [ ! -f ~/.local/share/bash-completion/completion
 shopt -oq posix || { [ -f /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion; } || { [ -f /etc/bash_completion ] && . /etc/bash_completion; } 	## programmable completion #skip this, if already set in /etc/bash.bashrc and /etc/profile
 shopt -oq posix || for f in ~/.local/share/bash-completion/completions/*; do [ -f "$f" ] && . "$f"; done  ## Loop and source all custom user completions
 #
-if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases; fi 	## Alias definitions # TODO: fetch aliases from cloud and set
+if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases; fi	## Alias definitions # TODO: fetch aliases from cloud and set
 #
 _DS=/var/cfs/ds
 dsd(){ docker stack deploy "$1" -c "$_DS/$1.yml";} ## dsd(){ echo -e "$1 -c $_DS/$1/$1.yml" | docker stack deploy ;}
