@@ -82,7 +82,10 @@ alias dnls="docker node ls"
 alias dnps="docker node ps"
 alias dlc='docker ps -l'  # List last Docker container
 alias dlcid='docker ps -l -q'  # List last Docker container ID
-alias dlcip='docker inspect -f "{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}" $(docker ps -l -q)'  # Get IP's of last Docker container
+alias dlcip='docker inspect -f "{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}" $(docker ps -l -q) '  # Get IP's of last Docker container
+dlcn(){ docker ps -n "$1" --format "{{.ID}}\t{{.Names}}" | awk -F" " '{ print $1"\t"$2; }' | awk -F"." '{ print $1 }' $2 | tail -n 1 ; }
+dlcidn(){ docker ps -n "$1" --format "{{.ID}}" | tail -n 1; }
+dlcipn(){ docker inspect -f "{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}" $(dlcidn $1) | sed '${/^$/d;}'; }
 alias dlcex='docker exec -it `dlcid` ' # Enter last container (works with Docker 1.3 and above)
 alias dlcexec='docker exec -it `dlcid` ' # Enter last container (works with Docker 1.3 and above)
 alias dlcbash='docker exec -it `dlcid` bash' # Enter last container (works with Docker 1.3 and above)
