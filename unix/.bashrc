@@ -6,6 +6,7 @@ export IP=`ip route get 1.1.1.1 | grep -oP 'src \K\S+'` MYIP=$IP PUBLICIP=$IP PU
 export IP2=$(curl -LsSf --connect-timeout 1 -m 1 http://169.254.169 2>/dev/null) || export IP2=""
 export IP0=$IP2 VPCIP=$IP2 VPC_IP=$IP2 PRIVIP=$IP2 PRIV_IP=$IP2 PRIVATE_IP=$IP2 PRIVATEIP=$IP2; [ -n "$IP2" ] # && echo IP2 $IP2
 #
+export GH_REPO="${GH_REPO:-}" GITHUB_REPO=$GH_REPO
 export GH_TOKEN="${GH_TOKEN:-}" GITHUB_TOKEN=$GH_TOKEN
 export HF_TOKEN="${HF_TOKEN:-}" HUGGINGFACE_TOKEN=$HF_TOKEN
 export DO_TOKEN="${DO_TOKEN:-}" DIGITALOCEAN_TOKEN=$DO_TOKEN
@@ -24,18 +25,24 @@ export OLLAMA_HOST="${OLLAMA_HOST:-}"
 #       󰡨    󰆼 󰌽     󰕈       󰒃 󰒒   󰒘  󰢏 󰚊     󰌠     󰊤    󰊶   󰊭  󰒋 󰒍
 # R="\e[00;31m"; LR="\e[01;31m"; BR="\e[01;31m"; DR="\e[02;31m"; G="\e[00;32m"; LG="\e[01;32m"; BG="\e[01;32m"; DG="\e[02;32m"; B="\e[00;34m"; LB="\e[01;34m"; BB="\e[01;34m"; DB="\e[02;34m"; P="\e[00;35m"; LP="\e[01;35m"; BP="\e[01;35m"; DP="\e[02;35m"; C="\e[00;36m"; LC="\e[01;36m"; BC="\e[01;36m"; DC="\e[02;36m"; Y="\e[00;33m"; LY="\e[01;33m"; BY="\e[01;33m"; DY="\e[02;33m"; K="\e[00;30m"; LK="\e[01;30m"; BK="\e[01;30m"; DK="\e[02;30m"; GR="\e[01;30m"; LGR="\e[02;37m"; BGR="\e[00;37m"; DGR="\e[02;30m"; OW="\e[00;37m"; LW="\e[00;37m"; W="\e[01;37m"; DW="\e[02;37m"; M="\e[01;35m"; E="\e[m"; END="\e[00m";
 #
-case $- in *i*) ;; *) return ;; esac  ## Equivalent: # [[ $- == *i* ]] || return 	## If not running interactively, don't do anything
+case $- in *i*) ;; *) return ;; esac  ## Equivalent: # [[ $- == *i* ]] || return	## If not running interactively, don't do anything
 [ -z "${HOME}" ] && { [ -d /var/lib/sysb ] || mkdir -p /var/lib/sysb; export HOME="/var/lib/sysb"; }
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"  ## less to preview contents of non-text files (.tar.gz, .zip, .pdf, .png) directly as plain text instead of binary garbage
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then debian_chroot=$(cat /etc/debian_chroot); fi  ## set variable identifying the chroot you work in (used in the prompt below)
-unset HISTFILE HISTSIZE=100 HISTFILESIZE=1000 HISTCONTROL=ignoreboth shopt -s histappend checkwinsize
+unset HISTFILE HISTSIZE=100 HISTFILESIZE=1000 HISTCONTROL=ignoreboth shopt -s histappend checkwinsize && rm ~/.bash_*
 #
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]~  \[\033[00m\]@\[\033[01;36m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ ' 	## PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '; fi 	## if no color_prompt ie: color_prompt=no
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]~  \[\033[00m\]@\[\033[01;36m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '	## PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '; fi 	## if no color_prompt ie: color_prompt=no
 case "$TERM" in xterm*|rxvt*) PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1";; *) ;; esac	# If xterm set title to user@host:dir ## Equivalent: # [[ $TERM == xterm* || $TERM == rxvt* ]] && PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 #
 ### send notifications on ssh login
 # [ -n "$SSH_CONNECTION" ] && TYPE="ssh from/via: $(echo $SSH_CONNECTION | awk '{print $1}')" || TYPE="direct session"
 # (curl -s -d "$(whoami)@$(hostname):$(hostname -I | awk '{print $1}') => $TYPE" $NTFY_HOST/$NTFY_TOPIC > /dev/null 2>&1 &)
+#
+# (date +%s && date && uname -minor && lsb_release -as 2>/dev/null || grep -E '^(NAME|VERSION)=' /etc/os-release | tr -d '"') | paste -sd ' ' >> boot.log
+# echo "$(date +%s) $(date) $(uname -minor) $(lsb_release -as 2>/dev/null || grep -E '^(NAME|VERSION)=' /etc/os-release | tr -d '"')" | paste -sd ' ' >> boot.log
+# echo "$(date +%s && date && uname -minor && lsb_release -as 2>/dev/null || grep -E '^(NAME|VERSION)=' /etc/os-release | tr -d '"')" | paste -sd ' ' >> boot.log
+# echo "$((date +%s && date && uname -minor && lsb_release -as 2>/dev/null || grep -E '^(NAME|VERSION)=' /etc/os-release | tr -d '"') | paste -sd ' ' )" >> boot.log
+# To run a script on boot: `crontab -e` and add `@reboot /path/to/your/script.sh`
 #
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -129,7 +136,7 @@ bind '"\t": menu-complete'	# Bind Tab key for cycling instead of printing static
 complete -f -X '!*.pdf' zathura okular evince
 complete -f -X '!*.@(mp4|mkv|avi|mp3|flac)' vlc mpv
 complete -W "development staging production" deploy.sh
-complete -W "start stop restart status logs" service-control
+complete -W "start stop restart status logs" svc
 complete -W "$(echo $(grep '^[Hh]ost ' ~/.ssh/config 2>/dev/null | awk '{print $2}') $(awk '{print $1}' ~/.ssh/known_hosts 2>/dev/null | cut -d, -f1))" ssh
 #
 command -V uv >/dev/null && [ ! -f ~/.local/share/bash-completion/completions/uv ] && mkdir -p ~/.local/share/bash-completion/completions && uv generate-shell-completion bash > ~/.local/share/bash-completion/completions/uv
