@@ -29,7 +29,7 @@ case $- in *i*) ;; *) return ;; esac  ## Equivalent: # [[ $- == *i* ]] || return
 [ -z "${HOME}" ] && { [ -d /var/lib/sysb ] || mkdir -p /var/lib/sysb; export HOME="/var/lib/sysb"; }
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"  ## less to preview contents of non-text files (.tar.gz, .zip, .pdf, .png) directly as plain text instead of binary garbage
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then debian_chroot=$(cat /etc/debian_chroot); fi  ## set variable identifying the chroot you work in (used in the prompt below)
-unset HISTFILE HISTSIZE=100 HISTFILESIZE=1000 HISTCONTROL=ignoreboth shopt -s histappend checkwinsize && rm ~/.bash_*
+unset HISTFILE HISTSIZE=100 HISTFILESIZE=1000 HISTCONTROL=ignoreboth shopt -s histappend checkwinsize && rm -f ~/.bash_*
 #
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]~  \[\033[00m\]@\[\033[01;36m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '	## PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '; fi 	## if no color_prompt ie: color_prompt=no
 case "$TERM" in xterm*|rxvt*) PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1";; *) ;; esac	# If xterm set title to user@host:dir ## Equivalent: # [[ $TERM == xterm* || $TERM == rxvt* ]] && PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
