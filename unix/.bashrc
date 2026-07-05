@@ -31,7 +31,9 @@ case $- in *i*) ;; *) return ;; esac  ## Equivalent: # [[ $- == *i* ]] || return
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then debian_chroot=$(cat /etc/debian_chroot); fi  ## set variable identifying the chroot you work in (used in the prompt below)
 unset HISTFILE HISTSIZE=100 HISTFILESIZE=1000 HISTCONTROL=ignoreboth shopt -s histappend checkwinsize && rm -f ~/.bash_*
 #
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]~  \[\033[00m\]@\[\033[01;36m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '	## PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '; fi 	## if no color_prompt ie: color_prompt=no
+PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '  ## if no color_prompt ie: color_prompt=no
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;36m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+[ "$USER" = "sysb" ] && PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]~  \[\033[00m\]@\[\033[01;36m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 case "$TERM" in xterm*|rxvt*) PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1";; *) ;; esac	# If xterm set title to user@host:dir ## Equivalent: # [[ $TERM == xterm* || $TERM == rxvt* ]] && PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 #
 ### send notifications on ssh login
@@ -139,8 +141,8 @@ complete -W "development staging production" deploy.sh
 complete -W "start stop restart status logs" svc
 complete -W "$(echo $(grep '^[Hh]ost ' ~/.ssh/config 2>/dev/null | awk '{print $2}') $(awk '{print $1}' ~/.ssh/known_hosts 2>/dev/null | cut -d, -f1))" ssh
 #
-command -V uv >/dev/null && [ ! -f ~/.local/share/bash-completion/completions/uv ] && mkdir -p ~/.local/share/bash-completion/completions && uv generate-shell-completion bash > ~/.local/share/bash-completion/completions/uv
-command -V uvx >/dev/null && [ ! -f ~/.local/share/bash-completion/completions/uvx ] && mkdir -p ~/.local/share/bash-completion/completions && uvx --generate-shell-completion bash > ~/.local/share/bash-completion/completions/uvx
+command -v uv >/dev/null && [ ! -f ~/.local/share/bash-completion/completions/uv ] && mkdir -p ~/.local/share/bash-completion/completions && uv generate-shell-completion bash > ~/.local/share/bash-completion/completions/uv
+command -v uvx >/dev/null && [ ! -f ~/.local/share/bash-completion/completions/uvx ] && mkdir -p ~/.local/share/bash-completion/completions && uvx --generate-shell-completion bash > ~/.local/share/bash-completion/completions/uvx
 command -v docker >/dev/null && [ ! -f ~/.local/share/bash-completion/completions/docker ] && mkdir -p ~/.local/share/bash-completion/completions && docker completion bash > ~/.local/share/bash-completion/completions/docker
 #
 shopt -oq posix || { [ -f /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion; } || { [ -f /etc/bash_completion ] && . /etc/bash_completion; } 	## programmable completion #skip this, if already set in /etc/bash.bashrc and /etc/profile
