@@ -25,11 +25,11 @@ export OLLAMA_HOST="${OLLAMA_HOST:-}"
 #       󰡨    󰆼 󰌽     󰕈       󰒃 󰒒   󰒘  󰢏 󰚊     󰌠     󰊤    󰊶   󰊭  󰒋 󰒍
 # R="\e[00;31m"; LR="\e[01;31m"; BR="\e[01;31m"; DR="\e[02;31m"; G="\e[00;32m"; LG="\e[01;32m"; BG="\e[01;32m"; DG="\e[02;32m"; B="\e[00;34m"; LB="\e[01;34m"; BB="\e[01;34m"; DB="\e[02;34m"; P="\e[00;35m"; LP="\e[01;35m"; BP="\e[01;35m"; DP="\e[02;35m"; C="\e[00;36m"; LC="\e[01;36m"; BC="\e[01;36m"; DC="\e[02;36m"; Y="\e[00;33m"; LY="\e[01;33m"; BY="\e[01;33m"; DY="\e[02;33m"; K="\e[00;30m"; LK="\e[01;30m"; BK="\e[01;30m"; DK="\e[02;30m"; GR="\e[01;30m"; LGR="\e[02;37m"; BGR="\e[00;37m"; DGR="\e[02;30m"; OW="\e[00;37m"; LW="\e[00;37m"; W="\e[01;37m"; DW="\e[02;37m"; M="\e[01;35m"; E="\e[m"; END="\e[00m";
 #
+unset HISTFILE HISTSIZE=100 HISTFILESIZE=1000 HISTCONTROL=ignoreboth shopt -s histappend checkwinsize && rm -f ~/.bash_*
 case $- in *i*) ;; *) return ;; esac  ## Equivalent: # [[ $- == *i* ]] || return	## If not running interactively, don't do anything
 [ -z "${HOME}" ] && { [ -d /var/lib/sysb ] || mkdir -p /var/lib/sysb; export HOME="/var/lib/sysb"; }
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"  ## less to preview contents of non-text files (.tar.gz, .zip, .pdf, .png) directly as plain text instead of binary garbage
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then debian_chroot=$(cat /etc/debian_chroot); fi  ## set variable identifying the chroot you work in (used in the prompt below)
-unset HISTFILE HISTSIZE=100 HISTFILESIZE=1000 HISTCONTROL=ignoreboth shopt -s histappend checkwinsize && rm -f ~/.bash_*
 #
 PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '  ## if no color_prompt ie: color_prompt=no
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;36m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
