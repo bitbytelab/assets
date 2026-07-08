@@ -3,7 +3,8 @@ export COMPOSE_REMOVE_ORPHANS=1
 export PATH="/var/lib/sysb/.local/bin:$PATH"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'  # colored GCC warnings and errors
 export IP=`ip route get 1.1.1.1 | grep -oP 'src \K\S+'` MYIP=$IP PUBLICIP=$IP PUBLIC_IP=$IP # && echo IP $IP
-export IP2=$(curl -LsSf --connect-timeout 1 -m 1 http://169.254.169 2>/dev/null) || export IP2=""
+export IP2=$(ip -4 addr show eth1 | grep -oP '(?<=inet\s)\d+(\.\d+){3}') || export IP2=""
+#export IP2=$(curl -LsSf --connect-timeout 1 -m 1 http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address 2>/dev/null) || export IP2=""
 export IP0=$IP2 VPCIP=$IP2 VPC_IP=$IP2 PRIVIP=$IP2 PRIV_IP=$IP2 PRIVATE_IP=$IP2 PRIVATEIP=$IP2; [ -n "$IP2" ] # && echo IP2 $IP2
 #
 export GH_REPO="${GH_REPO:-}" GITHUB_REPO=$GH_REPO
