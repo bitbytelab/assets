@@ -83,6 +83,8 @@ alias dcl="docker compose logs -f"
 alias dcup="docker compose up"
 alias dcupd="docker compose up -d --remove-orphans"
 alias dcp="docker compose --profile"
+alias dcr="docker compose run"
+alias dcrm="docker compose run --rm"
 alias docker-compose="docker compose"
 # docker ps --format "{{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Status}}\t{{.Ports}}" | awk -F'\t' 'BEGIN {print "CONTAINER ID\tNAMES\tCOMMAND\tSTATUS\tPORTS"} {names=substr($2,1,20); gsub(/0.0.0.0:/, "", $5); gsub(/\/tcp/, "", $5); print $1 "\t" names "\t" $3 "\t" $4 "\t" $5}' | column -t -s $'\t'
 alias dps='docker ps --format "{{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Status}}\t{{.Ports}}" | awk -F"\t" '\''BEGIN {print "CONTAINER ID\tNAMES\tCOMMAND\tSTATUS\tPORTS"} {names=substr($2,1,24); gsub(/0.0.0.0:/, "", $5); gsub(/\/tcp/, "", $5); print $1 "\t" names "\t" $3 "\t" $4 "\t" $5}'\'' | column -t -s $'\''\t'\'''
